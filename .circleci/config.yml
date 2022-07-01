@@ -11,7 +11,7 @@ commands:
           name: Destroy environments
           when: on_fail
           command: |
-            REGEX="$<< parameters.workflow_id >>"
+            REGEX=<< parameters.workflow_id >>
             echo $REGEX
             stacks=$(aws cloudformation describe-stacks --query Stacks[].StackName --output=text)
             for stack in $stacks; do
@@ -151,7 +151,7 @@ jobs:
       #       - project/.circleci/ansible/inventory.txt
       - run: exit 1
       - destroy-environment:
-          workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"     
+          workflow_id: "$${CIRCLE_WORKFLOW_ID:0:7}"     
 
 workflows:
   default:
