@@ -11,12 +11,12 @@ commands:
           name: Destroy environments
           when: on_fail
           command: |
-            REGEX=<< parameters.workflow_id >>
-            echo $REGEX
+            # REGEX=
+            # echo $REGEX
             stacks=$(aws cloudformation describe-stacks --query Stacks[].StackName --output=text)
             echo $stacks
             for stack in $stacks; do
-                if [[ $stack =~ $"$REGEX" ]]; then
+                if [[ $stack =~ $"<< parameters.workflow_id >>" ]]; then
                     echo "Wait while deleting stack ${stack}..."
                     aws cloudformation delete-stack --stack-name $stack
                     aws cloudformation wait stack-delete-complete --stack-name $stack
@@ -138,7 +138,7 @@ jobs:
               --template-file .circleci/files/frontend.yml \
               --tags project=udapeople \
               --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --parameter-overrides ID="{CIRCLE_WORKFLOW_ID:0:7}"  
+              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
       - run:
           name: Add back-end ip to ansible inventory
           command: |
@@ -146,6 +146,7 @@ jobs:
             aws ec2 describe-instances \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --output text >> ~/project/.circleci/ansible/inventory.txt
+            echo ~/project/.circleci/ansible/inventory.txt
       - persist_to_workspace:
           root: ~/
           paths:
