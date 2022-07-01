@@ -11,13 +11,12 @@ commands:
           name: Destroy environments
           when: on_fail
           command: |
-            REGEX="$"
-            REGEX+=<< parameters.workflow_id >>
+            REGEX=<< parameters.workflow_id >>
             echo $REGEX
             stacks=$(aws cloudformation describe-stacks --query Stacks[].StackName --output=text)
             echo $stacks
             for stack in $stacks; do
-                if [[ $stack =~ $REGEX ]]; then
+                if [[ $stack =~ $"$REGEX" ]]; then
                     echo "Wait while deleting stack ${stack}..."
                     aws cloudformation delete-stack --stack-name $stack
                     aws cloudformation wait stack-delete-complete --stack-name $stack
