@@ -220,7 +220,7 @@ jobs:
             python3 -m pip install --user ansible
             curl -fsSL https://rpm.nodesource.com/setup_lts.x | bash -
             yum install -y nodejs 
-            yum install -y tar
+            yum install -y tar gzip
             yum install -y awscli
       - attach_workspace:
           at: ~/
