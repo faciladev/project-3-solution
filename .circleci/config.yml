@@ -218,7 +218,7 @@ jobs:
             yum update -y
             yum install -y python3
             python3 -m pip install --user ansible
-            curl -sL https://rpm.nodesource.com/setup_16.15.1 
+            curl -fsSL https://rpm.nodesource.com/setup_lts.x | bash -
             yum install -y nodejs 
             yum install -y tar
             yum install -y awscli
