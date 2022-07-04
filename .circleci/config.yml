@@ -218,8 +218,8 @@ jobs:
             yum update -y
             yum install -y python3
             python3 -m pip install --user ansible
-            yum install dnf -y
-            dnf module install nodejs:12 -y
+            curl -sL https://rpm.nodesource.com/setup_16.15.1 
+            yum install -y nodejs 
             yum install -y tar
             yum install -y awscli
       - attach_workspace:
@@ -302,5 +302,5 @@ workflows:
           requires: [configure-infrastructure]
       - deploy-frontend:
           requires: [run-migrations]
-      - deploy-backend:
-          requires: [run-migrations]
+      # - deploy-backend:
+      #     requires: [run-migrations]
