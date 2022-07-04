@@ -215,9 +215,10 @@ jobs:
       - run:
           name: Install dependencies
           command: |
+            sudo yum update
             yum install -y python3
             python3 -m pip install --user ansible
-            yum install -y nodejs
+            dnf module install nodejs:12
             yum install -y tar
             yum install -y awscli
       - attach_workspace:
@@ -256,7 +257,7 @@ jobs:
           name: Install dependencies
           command: |
             apk add --update openssh
-            apk add --update node npm
+            apk add --update nodejs npm
             pip3 install awscli 
             apk add --update ansible tar gzip
       - run:
