@@ -256,6 +256,7 @@ jobs:
           name: Install dependencies
           command: |
             apk add --update openssh
+            apk add --update node npm
             pip3 install awscli 
             apk add --update ansible tar gzip
       - run:
