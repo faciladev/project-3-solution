@@ -252,8 +252,6 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints: ["16:cc:63:c4:6e:2f:67:b1:8c:40:c3:34:23:dd:f4:44"]
-      - attach_workspace:
-          at: ~/
       - run:
           name: Install dependencies
           command: |
@@ -261,6 +259,8 @@ jobs:
             apk add --update nodejs npm
             pip3 install awscli 
             apk add --update ansible tar gzip
+      - attach_workspace:
+          at: ~/
       - run:
           name: Deploy backend
           command: |
@@ -273,9 +273,9 @@ jobs:
             cd ~/project/.circleci/ansible
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
-            ansible-playbook -i inventory.txt deploy-backend.yml
+            ansible-playbook -i inventory.txt --key-file ~/.ssh/id_rsa_16cc63c46e2f67b18c40c33423ddf444 deploy-backend.yml
       # Here's where you will add some code to rollback on failure  
-      - destroy-environment:
+      - destroy-environment
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"   
 
 workflows:
