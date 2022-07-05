@@ -158,7 +158,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["f5:ae:a3:45:c8:ef:a9:91:7a:92:11:5f:1b:74:32:2a"]
+          fingerprints: ["7c:81:a4:61:4e:e5:54:81:0a:09:66:1d:ad:11:ec:6e"]
       - attach_workspace:
           at: ~/
       - run: apk add --update openssh
@@ -169,6 +169,7 @@ jobs:
             apk add --update ansible tar gzip
       - run:
           name: Configure server
+          no_output_timeout: 20m
           command: |
             ls ~/.ssh
             ansible-playbook -i ~/project/.circleci/ansible/inventory.txt  ~/project/.circleci/ansible/configure-server.yml
@@ -252,7 +253,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["f5:ae:a3:45:c8:ef:a9:91:7a:92:11:5f:1b:74:32:2a"]
+          fingerprints: ["7c:81:a4:61:4e:e5:54:81:0a:09:66:1d:ad:11:ec:6e"]
       - attach_workspace:
           at: ~/
       - run: apk add --update openssh
