@@ -159,7 +159,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["7c:81:a4:61:4e:e5:54:81:0a:09:66:1d:ad:11:ec:6e"]
+          fingerprints: ["ea:b2:9f:77:59:27:df:b4:31:30:18:bf:d3:08:36:95"]
       - attach_workspace:
           at: ~/
       - run: apk add --update openssh
@@ -254,7 +254,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["7c:81:a4:61:4e:e5:54:81:0a:09:66:1d:ad:11:ec:6e"]
+          fingerprints: ["ea:b2:9f:77:59:27:df:b4:31:30:18:bf:d3:08:36:95"]
       - attach_workspace:
           at: ~/
       - run: apk add --update openssh
