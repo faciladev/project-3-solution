@@ -26,8 +26,8 @@
 
 - name: "extract zipped artifact"
   unarchive:
-    src: "files/artifact.tar.gz"
-    dest: "files"
+    src: "~/project/.circleci/ansible/roles/deploy/files/artifact.tar.gz"
+    dest: "~/project/.circleci/ansible/roles/deploy/files"
 
 
 - name: "start app"
