@@ -273,7 +273,8 @@ jobs:
             cd ..
             # Zip the directory
             tar -C backend -czvf artifact.tar.gz .
-            # cd ~/project/.circleci/ansible
+            mkdir ~/project/.circleci/ansible/roles/deploy/files
+            mv artifact.tar.gz ~/project/.circleci/ansible/roles/deploy/files
             echo "Contents  of the inventory.txt file is -------"
             cat ~/project/.circleci/ansible/inventory.txt
             ls ~/.ssh
@@ -281,7 +282,8 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - project/artifact.tar.gz
+            # - project/artifact.tar.gz
+            - project/.circleci/ansible/roles/deploy/files/artifact.tar.gz
       # Here's where you will add some code to rollback on failure  
       - destroy-environment:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"   

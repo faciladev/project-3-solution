@@ -21,18 +21,18 @@
 
 - name: "Echo directory"
   shell: |
-    pwd
-    ls -al .
+    echo $(pwd)
+    echo $(ls -a .)
 
 - name: "extract zipped artifact"
   unarchive:
-    src: "artifact.tar.gz"
-    dest: "~/artifact"
+    src: "files/artifact.tar.gz"
+    dest: "files"
 
 
 - name: "start app"
   shell: |
-    cd "artifact"
+    cd "files"
     npm install
     pm2 stop default
     pm2 start npm -- start
