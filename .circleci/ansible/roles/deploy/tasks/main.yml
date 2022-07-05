@@ -21,13 +21,13 @@
 
 - name: "Echo directory"
   shell: |
-    echo $(pwd)
-    echo $(ls -a .)
+    cd ~/project/.circleci/ansible/roles/deploy/files
+    tar -xf artifact.tar.gz
 
-- name: "extract zipped artifact"
-  unarchive:
-    src: "~/project/.circleci/ansible/roles/deploy/files/artifact.tar.gz"
-    dest: "~/project/.circleci/ansible/roles/deploy/files"
+# - name: "extract zipped artifact"
+#   unarchive:
+#     src: "~/project/.circleci/ansible/roles/deploy/files/artifact.tar.gz"
+#     dest: "~/project/.circleci/ansible/roles/deploy/files"
 
 
 - name: "start app"
