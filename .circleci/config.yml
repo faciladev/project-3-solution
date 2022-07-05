@@ -252,6 +252,8 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints: ["f5:ae:a3:45:c8:ef:a9:91:7a:92:11:5f:1b:74:32:2a"]
+      - attach_workspace:
+          at: ~/
       - run: apk add --update openssh
       - run:
           name: Install dependencies
@@ -259,8 +261,6 @@ jobs:
             apk add --update nodejs npm
             pip3 install awscli 
             apk add --update ansible tar gzip
-      - attach_workspace:
-          at: ~/
       - run:
           name: Deploy backend
           command: |
@@ -270,11 +270,11 @@ jobs:
             cd ..
             # Zip the directory
             tar -C backend -czvf artifact.tar.gz .
-            cd ~/project/.circleci/ansible
+            # cd ~/project/.circleci/ansible
             echo "Contents  of the inventory.txt file is -------"
-            cat inventory.txt
+            cat ~/project/.circleci/ansible/inventory.txt
             ls ~/.ssh
-            ansible-playbook -i inventory.txt --key-file ~/.ssh/id_rsa_f5aea345c8efa9917a92115f1b74322a deploy-backend.yml
+            ansible-playbook -i ~/project/.circleci/ansible/inventory.txt --key-file ~/.ssh/id_rsa_f5aea345c8efa9917a92115f1b74322a ~/project/.circleci/ansible/deploy-backend.yml
       # Here's where you will add some code to rollback on failure  
       - destroy-environment:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"   
@@ -301,7 +301,7 @@ workflows:
           requires: [deploy-infrastructure]
       - run-migrations:
           requires: [configure-infrastructure]
-      - deploy-frontend:
-          requires: [run-migrations]
+      # - deploy-frontend:
+      #     requires: [run-migrations]
       - deploy-backend:
           requires: [run-migrations]
