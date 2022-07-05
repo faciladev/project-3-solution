@@ -21,8 +21,8 @@
 
 - name: "Echo directory"
   shell: |
-    ls -al ~
-    ls -al ~/project
+    pwd
+    ls -al .
 
 - name: "extract zipped artifact"
   unarchive:
