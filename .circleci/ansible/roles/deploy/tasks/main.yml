@@ -19,20 +19,19 @@
     production: yes
     state: present
 
-- name: "Echo directory"
+- name: "Create backend directory for backend app"
   shell: |
-    cd ~/project/.circleci/ansible/roles/deploy/files
-    tar -xf artifact.tar.gz
+    mkdir /home/ubuntu/backend
 
-# - name: "extract zipped artifact"
-#   unarchive:
-#     src: "~/project/.circleci/ansible/roles/deploy/files/artifact.tar.gz"
-#     dest: "~/project/.circleci/ansible/roles/deploy/files"
+- name: "extract zipped artifact"
+  unarchive:
+    src: "../../artifact.tar.gz"
+    dest: "/home/ubuntu/backend"
 
 
 - name: "start app"
   shell: |
-    cd "~/project/.circleci/ansible/roles/deploy/files"
+    cd /home/ubuntu/backend
     npm install
     pm2 stop default
     pm2 start npm -- start
