@@ -30,6 +30,7 @@
 
 
 - name: "start app"
+  become: true
   shell: |
     cd /home/ubuntu/backend
     npm install
