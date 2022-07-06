@@ -27,7 +27,7 @@ commands:
           command: |
             SUCCESS=$(curl https://keyvalue.immanuel.co/api/KeyVal/GetValue/3cg7aby9/migration_<< parameters.workflow_id >>)
             echo $SUCCESS
-            if [[ "$SUCCESS" == 1 ]]; 
+            if [[ "$SUCCESS" == 1 ]]
             then
               cd backend
               npm install
