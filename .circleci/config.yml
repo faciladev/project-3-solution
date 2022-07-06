@@ -15,6 +15,25 @@ commands:
             aws cloudformation delete-stack --stack-name udapeople-backend-<< parameters.workflow_id >>
             aws cloudformation delete-stack --stack-name udapeople-frontend-<< parameters.workflow_id >>
 
+  revert-migrations:
+    description: Revert the last migration if successfully run in the current workflow.
+    parameters:
+      # Add parameter here     
+    steps:
+      - run:
+          name: Revert migrations
+          # Add when this will run
+          command: |
+            # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
+            SUCCESS = 1
+            if(( $SUCCESS==1 )); 
+            then
+            #  cd ~/project/backend
+            #  npm install
+            #  Add revert code here. You can find this in the Getting Started section.
+              exit 1
+            fi
+
 jobs:
   build-frontend:
     docker:
@@ -141,6 +160,7 @@ jobs:
             echo $'\n'$API_URL >> ~/project/.circleci/ansible/inventory.txt
             echo http://$API_URL:3030 > ~/project/.circleci/ansible/api_url.txt
             cat ~/project/.circleci/ansible/inventory.txt
+            cat ~/project/.circleci/ansible/api_url.txt
       - persist_to_workspace:
           root: ~/
           paths:
@@ -299,9 +319,12 @@ jobs:
           name: Get backend url
           command: |
             export API_URL=$(cat ~/project/.circleci/ansible/api_url.txt)
+            echo $API_URL
       - run:
           name: Backend smoke test.
           command: |
+            echo $API_URL
+            export API_URL=$(cat ~/project/.circleci/ansible/api_url.txt)
             if curl "${API_URL}/api/status" | grep "ok"
             then
                 return 0
