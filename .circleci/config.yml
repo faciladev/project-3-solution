@@ -27,9 +27,9 @@ commands:
           command: |
             SUCCESS=$(curl https://keyvalue.immanuel.co/api/KeyVal/GetValue/3cg7aby9/migration_<< parameters.workflow_id >>)
             echo $SUCCESS
-            if [[ $SUCCESS==1 ]]; 
+            if [[ "$SUCCESS" == 1 ]]; 
             then
-              cd ~/project/backend
+              cd backend
               npm install
               npm run migration:revert
             fi
