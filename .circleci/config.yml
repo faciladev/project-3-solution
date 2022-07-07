@@ -248,22 +248,15 @@ jobs:
       - run:
           name: Get backend url
           command: |
-            export BACKEND_IP=$(aws ec2 describe-instances \
-            --filters "Name=tag:project,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-            --query 'Reservations[*].Instances[*].PublicIpAddress' \
-            --output text)
-            export API_URL="http://${BACKEND_IP}:3030"
-            echo "${API_URL}" >> frontend/.env
-            cat frontend/.env 
+            BACKEND_IP=$(cat ~/project/.circleci/ansible/api_url.txt)
+            echo "${BACKEND_IP}"
       - run:
           name: Deploy frontend objects
           command: |
-            export BACKEND_IP=$(aws ec2 describe-instances \
-            --filters "Name=tag:project,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-            --query 'Reservations[*].Instances[*].PublicIpAddress' \
-            --output text)
-            export API_URL="http://${BACKEND_IP}:3030"
+            BACKEND_IP=$(cat ~/project/.circleci/ansible/api_url.txt)
+            API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}" >> frontend/.env
+            cat frontend/.env 
             cd frontend
             npm install
             npm run build
