@@ -34,5 +34,6 @@
   shell: |
     cd /home/ubuntu/backend
     npm install
+    npm build
     pm2 stop default
     pm2 start npm -- start
