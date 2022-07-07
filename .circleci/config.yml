@@ -254,7 +254,7 @@ jobs:
           name: Deploy frontend objects
           command: |
             BACKEND_IP=$(cat ~/project/.circleci/ansible/api_url.txt)
-            API_URL="http://${BACKEND_IP}:3030"
+            export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}" >> frontend/.env
             cat frontend/.env 
             cd frontend
